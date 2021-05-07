@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, {  useState } from 'react';
 import './App.css';
 
 
@@ -8,38 +8,46 @@ interface iTask {
   name: string;
   done: boolean;
 }
-function App():JSX.Element{
- 
-  const [newTask, setNewtask] = useState<string>('');
-  const [tasks, setTasks]=useState<iTask[]>([]);
-  
-  const handleSubmit = (e: FormEvent ) =>{
-     e.preventDefault();
-     addTasks(newTask);
-    setNewtask('');
-    
-  }
- const addTasks = (name: string) =>{
+function App(): JSX.Element {
 
-  const newTasks = [...tasks, {name, done: false}]
-      setTasks(newTasks);
- }
+  const [newTask, setNewtask] = useState<string>('');
+  const [tasks, setTasks] = useState<iTask[]>([]);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    addTasks(newTask);
+    setNewtask('');
+
+  }
+  const addTasks = (name: string) => {
+
+    const newTasks = [...tasks, { name, done: false }]
+    setTasks(newTasks);
+  }
 
   return (
-   <Fragment>
-     <form onSubmit={handleSubmit} >
-       <input type="text" onChange={e => setNewtask(e.target.value) } value={newTask} />
-       <button>
-         save
-       </button>
-     </form>
-     {
-       tasks.map((t: iTask, i: number) =>{
+    <div className="container p-4">
+      <div className="row">
+        <div className="col-md-6 offset-md-3">
+          <div className="card">
+            <div className="card-body">
+              <form onSubmit={handleSubmit} >
+                <input type="text" onChange={e => setNewtask(e.target.value)} value={newTask} className="form-control" />
+                <button>
+                  save
+                </button>
+              </form>
+            </div>
+          </div>
+          {
+            tasks.map((t: iTask, i: number) => {
 
-            return <h1 key={i}>{t.name}</h1>
-       })
-     }
-   </Fragment>
+              return <h1 key={i}>{t.name}</h1>
+            })
+          }
+        </div>
+      </div>
+    </div>
   );
 }
 
