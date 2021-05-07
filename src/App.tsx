@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 
@@ -21,8 +21,15 @@ function App(): JSX.Element {
   }
   const addTasks = (name: string) => {
 
-    const newTasks = [...tasks, { name, done: false }]
+    const newTasks: iTask[] = [...tasks, { name, done: false }]
     setTasks(newTasks);
+  }
+
+ const toggleDoneTask = (i: number)=>{
+
+    const newTasks: iTask[] = {...tasks};
+    newTasks[i].done = !newTasks[i].done;
+
   }
 
   return (
@@ -33,17 +40,24 @@ function App(): JSX.Element {
             <div className="card-body">
               <form onSubmit={handleSubmit} >
                 <input type="text" onChange={e => setNewtask(e.target.value)} value={newTask} className="form-control" />
-                <button>
+                <button className="btn btn-success btn-block mt-2">
                   save
                 </button>
               </form>
             </div>
           </div>
           {
-            tasks.map((t: iTask, i: number) => {
+            tasks.map((t: iTask, i: number) => (
+              <div className="card card-body mt-2" key={i}>
+                <h1 style={{ textDecoration: t.done ? 'line-through' : '' }} >{t.name}</h1>
+                <div>
+                  <button  className="btn btn-secondary" onClick={()=>toggleDoneTask(i)}>
+                    {t.done ? '✓' : '✗'}
+                  </button>
+                </div>
+              </div>
 
-              return <h1 key={i}>{t.name}</h1>
-            })
+            ))
           }
         </div>
       </div>
